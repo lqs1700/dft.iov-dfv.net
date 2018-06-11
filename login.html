@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>东方启辰登录页面</title>
+		 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/login.css"/>
+	</head>
+	<body>
+		<div class="htmleaf-container">
+			<div class="wrapper">
+				<div class="container">
+					<h2><span>DFV</span>东方启辰</h2>
+					<form class="form" action="loginAction.php" method="post">
+						<input type="text" placeholder="请输入帐号" name="username">
+						<input type="password" placeholder="请输入密码" name="password">
+						<button type="submit" id="login-button">登录</button>
+					</form>
+				</div>
+				<ul class="bg-bubbles">
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="layer/layer.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		//表单验证
+		$('#login-button').click(function(e){			
+			if(!$('.form input[type="text"]').val()||!$('.form input[type="password"]').val()){
+				event.preventDefault();
+				 layer.msg('用户名或密码不能为空',{
+				    time: 1000, //2s后自动关闭
+				  });
+				return;
+			}
+		})
+	</script>
+</html>

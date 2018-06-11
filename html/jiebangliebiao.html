@@ -1,0 +1,51 @@
+<link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" href="../css/style.css" />
+<script type="text/javascript" src="../js/timer.js" ></script>
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="well well-sm text-center">解　绑　列　表</div>
+                <div id="timer"></div>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center table-striped table-hover">
+                        <thead>
+                            <tr class="info">
+                                <th>车机编号</th>
+                                <th>cernumber</th>
+                                <th>车牌号</th>
+                                <th>用户姓名</th>
+                                <th>车型</th>
+                                <th>车型</th>
+                                <th>autoframeno</th>
+                                <th>用户手机</th>
+                                <th>代理手机</th>
+                                <th>解绑时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($num as $pic): ?>
+                                <tr class="cen">
+                                    <td><?php echo  $pic['devid'] ?></td>
+                                    <td><?php echo  $pic['cernumber'] ?></td>
+                                    <td><?php echo  $pic['autonumber'] ?></td>
+                                    <td><?php echo  $pic['username'] ?></td>
+                                    <td><?php echo  $pic['autotype'] ?></td>
+                                    <td><?php echo  $pic['autoname'] ?></td>
+                                    <td><?php echo  $pic["autoframeno"] ?></td>
+                                    <td><?php echo  $pic['userphone'] ?></td>
+                                    <td><?php echo  $pic['dealerphone'] ?></td>
+                                    <td><?php echo  $pic["unblingdate"] ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            <tr><td colspan="10" bgcolor="#E0EEE0"><div align="center"><?php echo $key?></div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

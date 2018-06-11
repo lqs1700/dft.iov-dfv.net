@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>东方启辰大数据中心</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../css/style.css" />
+    <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=ycIBNZHyPurbd43eBR8veWmSM8Vp3CGy"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
+    <script src="../laydate/laydate.js"></script>
+</head>
+<style>
+    body{background-color: #1d5e7e;}
+    .row{padding: 0;margin: 0;border: none;}
+    .bg-danger{padding:0;padding-left:504px;width:100%;height:115px;background: url("../img/bg3.png")}
+    .bg-danger img{margin-right:52px;margin-top: 66px;}
+    h3{margin:0;padding:0;height:100%;float: right;font-family:"微软雅黑";font-size:16px;margin-right: 86px;color: #44d5ff;line-height: 115px;}
+    h3 a{font-family:"微软雅黑";font-size:16px;color: #44d5ff;}
+    h3,span:hover{cursor: pointer}
+    form{height: 144px;background-color:#1d5e7e;padding-top: 58px;margin-bottom: 0;}
+    label{font-family: "微软雅黑";font-weight:normal;font-size: 16px; color: #9ee9ff;margin-left: 86px;}
+    input[type="text"]{
+        background-color:#1d5e7e;
+        border: 1px solid #9ee9ff;
+        color:#9ee9ff;
+        padding:0 8px;
+        width: 165px;;
+    }
+    ::-webkit-input-placeholder{
+        color:#c2edf9;
+    }
+    input[type="submit"]{
+        margin-left: 34px;
+        background: url("../img/anniu.png") no-repeat center;
+        border: none;
+        padding:0 10px;
+        font-size: 15px;
+        color: #103951;
+        border-radius: 3px;;
+    }
+    .content-list{background-color: #4488a5}
+    .content-list span{line-height: 40px;color: #aeedff;font-size: 14px;}
+    .content span{z-index:-1;background-color: #1d5e7e;height: 50px;line-height: 50px;color: #aeedff;font-size: 16px;border-bottom: 1px solid #4488a5;}
+    #map_canvas{width:100%;height:700px;}
+    th{color: #0ac3f8;}
+    .table_data_oper tbody tr td{background-color: #1d5e7e;}
+    .table_data_oper tbody tr td{color: #9ee9ff;}
+</style>
+<body>
+<div class="row">
+    <div class="bg-danger">
+        <a href="../php/dancheshuju2.php"><img src="../img/002.png" alt=""></a>
+        <a href="../php/danche2.php"><img src="../img/003.png" alt=""></a>
+        <h3><a href="../login.html">退出登陆</a></h3>
+    </div>
+</div>
+<form action="../php/dancheshuju2.php" method="post">
+    <label>iccid：<?php echo $iccid;?></label>
+    <label>起始时间：</label>
+    <input type="text" id="Dabegin" name="Dabegin" value="<?php echo isset($_POST['Dabegin'])?$_POST['Dabegin']:'';?>" placeholder="请选择日期" required>
+    <label>截止时间：</label>
+    <input type="text" id="Daend" name="Daend" value="<?php echo isset($_POST['Daend'])?$_POST['Daend']:'';?>" placeholder="请选择日期" required>
+    <input type="submit" value="查询">
+</form>
+<div class="table-responsive">
+    <table class="table table-bordered text-center table-striped table-hover table_data_oper">
+        <thead>
+        <tr class="info">
+            <th>时间</th>
+            <th>事件</th>
+            <th>经度</th>
+            <th>纬度</th>
+        </tr>
+        </thead>
+        <?php if(isset($res)):?>
+        <?php foreach ($res as $pic): ?>
+        <tbody>
+        <tr>
+            <td><?php echo  $pic['creat_time'] ?></td>
+            <td><?php echo  $pic['event_desc'] ?></td>
+            <td><?php echo  $pic['latitude'] ?></td>
+            <td><?php echo  $pic['longitude'] ?></td>
+        </tr>
+        </tbody>
+        <?php endforeach; ?>
+        <?php endif;?>
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+    laydate.render({
+        elem: '#Dabegin' //指定元素
+    });
+</script>
+<script>
+    laydate.render({
+        elem: '#Daend' //指定元素
+    });
+</script>

@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>单车开关机数据查询</title>
+    <script src="../laydate/laydate.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        th{text-align: center;}
+        td{text-align: center;}
+    </style>
+</head>
+<body>
+    <form style="position:relative;top:8px;" action="../php/dancheshuju.php" method="post">
+        <label>iccid：</label>
+        <input type="text" name="user" required >
+        <label>起始时间：</label>
+        <input type="text" id="Dabegin" name="Dabegin" placeholder="请选择日期" required >
+        <label>截止时间：</label>
+        <input type="text" id="Daend" name="Daend" placeholder="请选择日期" required >
+        <input type="submit" value="开始">
+    </form>
+
+    <div class="table-responsive">
+            <table class="table table-bordered text-center table-striped table-hover table_data_oper">
+                <thead>
+                <tr class="info">
+                    <th>ICCID</th>
+                    <th>时间</th>
+                    <th>事件</th>
+                    <th>经度</th>
+                    <th>纬度</th>
+                </tr>
+                </thead>
+                <?php if(isset($res)):?>
+                <?php foreach ($res as $pic): ?>
+                <tbody>
+                <tr>
+                    <td><?php echo  $pic['iccid'] ?></td>
+                    <td><?php echo  $pic['creat_time'] ?></td>
+                    <td><?php echo  $pic['event_desc'] ?></td>
+                    <td><?php echo  $pic['latitude'] ?></td>
+                    <td><?php echo  $pic['longitude'] ?></td>
+                </tr>
+                </tbody>
+                <?php endforeach; ?>
+                <?php endif;?>
+            </table>
+</div>
+<script type="text/javascript">
+    laydate.render({
+        elem: '#Dabegin' //指定元素
+    });
+</script>
+<script>
+    laydate.render({
+        elem: '#Daend' //指定元素
+    });
+</script>
+</body>
+</html>

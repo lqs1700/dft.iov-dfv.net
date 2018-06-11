@@ -1,0 +1,367 @@
+<html lang="en">
+<head> 
+    <meta charset="utf-8" /> 
+    <title>路书</title> 
+    <style type="text/css">
+        body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+        #map_canvas{width:100%;height:740px;}
+        #result {width:100%}
+        input[type='text']{width:150px;}
+    </style>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=ycIBNZHyPurbd43eBR8veWmSM8Vp3CGy"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
+    <script src="../laydate/laydate.js"></script>
+
+</head> 
+<body> 
+    <div id="Choose">
+       <form style="position: relative;top:5px"; action="#" method="post">
+ 
+                <label>iccid1：</label>
+                <input type="text" name="user[]" required >
+            
+                <label>iccid2：</label>
+                <input type="text" name="user[]" required >
+
+                <label>iccid3：</label>
+                <input type="text" name="user[]" required >
+
+                <label>iccid4：</label>
+                <input type="text" name="user[]" required >
+
+                <label>iccid5：</label>
+                <input type="text" name="user[]" required >
+                
+                <label>iccid6：</label>
+                <input type="text" name="user[]" required >
+            
+                <label>iccid7：</label>
+                <input type="text" name="user[]" required >
+                <br/>
+                <label>iccid8：</label>
+                <input type="text" name="user[]" required >
+                
+                <label>iccid9：</label>
+                <input type="text" name="user[]" required >
+
+                <label>iccid10  : </label>
+                <input type="text" name="user[]" required >
+                
+                <label style="margin-left:325px;">起始时间：</label>
+                <input type="text" id="Dabegin" name="Dabegin" placeholder="请选择日期" required value="<?php echo isset($_POST['Dabegin'])?$_POST['Dabegin']:'';?>">
+         
+                <label>截止时间：</label>
+                <input type="text" id="Daend" name="Daend" placeholder="请选择日期" required value="<?php echo isset($_POST['Daend'])?$_POST['Daend']:'';?>">
+
+                <button id="Obuttom">确定选择</button>
+        </form>    
+    </div>  
+    <div id="map_canvas"></div> 
+    <div id="result"></div>
+    <button id="run">开始</button> 
+<!--     <button id="stop">停止</button> 
+    <button id="pause">暂停</button> --> 
+    <button id="hide">隐藏信息窗口</button> 
+    <button id="show">展示信息窗口</button> 
+
+    <script type="text/javascript">
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#Dabegin' //指定元素
+    });
+    </script>
+    <script>
+
+    laydate.render({
+      elem: '#Daend' //指定元素
+    });
+    </script>
+
+    <script type="text/javascript"> 
+        var Obuttom = document.getElementById("Obuttom");
+
+            Obuttom.onclick = function(){
+                var user = document.getElementById("user").value;            
+                var Dabegin = document.getElementById("Dabegin").value;   
+                var Daend = document.getElementById("Daend").value;
+
+                $.ajax({
+                    url:'php/doudian.php',
+                    type:'post',
+                    data:{
+                        "user":user,
+                        "Dabegin":Dabegin,
+                        "Daend":Daend
+                        },
+                success:function(data){},
+                    });
+            };
+    </script>
+
+    <script> 
+    var map = new BMap.Map('map_canvas');
+    map.enableScrollWheelZoom();
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 13);
+    var lushu1;
+    var lushu2;
+    var lushu3;
+    var lushu4;
+    var lushu5;
+    var lushu6;
+    var lushu7;
+    var lushu8;
+    var lushu9;
+    var lushu10;
+
+    // 实例化一个驾车导航用来生成路线
+    var drv = new BMap.DrivingRoute('北京', {
+        onSearchComplete: function(res) {
+            if (drv.getStatus() == BMAP_STATUS_SUCCESS) {
+                var plan = res.getPlan(0);
+                var arrPois1 =[];
+                var arrPois2 =[];
+                var arrPois3 =[];
+                var arrPois4 =[];
+                var arrPois5 =[];
+                var arrPois6 =[];
+                var arrPois7 =[];
+                var arrPois8 =[];
+                var arrPois9 =[];
+                var arrPois10 =[];
+
+                var arr1 = new Array();
+                arr1 = eval('<?php echo json_encode($arr_longitude);?>');
+            
+                var arr2 = new Array();
+                arr2 = eval('<?php echo json_encode($arr_latitude);?>');  
+
+                for(var s=0;s<arr1[0].length;s++)
+                {
+                    arrPois1.push(new BMap.Point(arr1[0][s],arr2[0][s]));
+                    arrPois2.push(new BMap.Point(arr1[1][s],arr2[1][s])); 
+                    arrPois3.push(new BMap.Point(arr1[2][s],arr2[2][s])); 
+                    arrPois4.push(new BMap.Point(arr1[3][s],arr2[3][s])); 
+                    arrPois5.push(new BMap.Point(arr1[4][s],arr2[4][s]));
+                    arrPois6.push(new BMap.Point(arr1[5][s],arr2[5][s]));
+                    arrPois7.push(new BMap.Point(arr1[6][s],arr2[6][s])); 
+                    arrPois8.push(new BMap.Point(arr1[7][s],arr2[7][s])); 
+                    arrPois9.push(new BMap.Point(arr1[8][s],arr2[8][s])); 
+                    arrPois10.push(new BMap.Point(arr1[9][s],arr2[9][s]));
+                }       
+
+                // map.addOverlay(new BMap.Polyline(arrPois1, {strokeColor: '#f9082a',strokeWeight : 2,strokeOpacity : 0.5}));
+                // map.addOverlay(new BMap.Polyline(arrPois2, {strokeColor: '#eb08f9',strokeWeight : 2,strokeOpacity : 0.5}));
+                // map.addOverlay(new BMap.Polyline(arrPois3, {strokeColor: 'green',strokeWeight : 2,strokeOpacity : 0.5}));
+                // map.addOverlay(new BMap.Polyline(arrPois4, {strokeColor: '#216fd0',strokeWeight : 2,strokeOpacity : 0.5}));
+                // map.addOverlay(new BMap.Polyline(arrPois5, {strokeColor: '#08f9f6',strokeWeight : 2,strokeOpacity : 0.5}));
+                map.setViewport(arrPois1);
+
+        var label = new BMap.Label("",{offset:new BMap.Size(0,-30)});
+        label.setStyle({border:"1px solid rgb(204, 204, 204)",color: "rgb(0, 0, 0)",borderRadius:"10px",padding:"5px",background:"rgb(255, 255, 255)",});
+                //marker.setLabel(label);
+                 
+      //map.addOverlay(marker);
+     BMapLib.LuShu.prototype._move=function(initPos,targetPos,effect) {
+            var pointsArr=[initPos,targetPos];  //点数组
+            var me = this,
+                //当前的帧数
+                currentCount = 0,
+                //步长，米/秒
+                timer = 10,
+                step = this._opts.speed / (1000 / timer),
+                //初始坐标
+                init_pos = this._projection.lngLatToPoint(initPos),
+                //获取结束点的(x,y)坐标
+                target_pos = this._projection.lngLatToPoint(targetPos),
+                //总的步长
+                count = Math.round(me._getDistance(init_pos, target_pos) / step);
+                 //显示折线 syj201607191107
+            this._map.addOverlay(new BMap.Polyline(pointsArr, { 
+                strokeColor : "#ff032d", 
+                strokeWeight : 3,
+                strokeOpacity : 0.4,
+            })); // 画线 
+            //如果小于1直接移动到下一点
+            if (count < 1) {
+                me._moveNext(++me.i);
+                return;
+            }
+            me._intervalFlag = setInterval(function() {
+            //两点之间当前帧数大于总帧数的时候，则说明已经完成移动
+                if (currentCount >= count) {
+                    clearInterval(me._intervalFlag);
+                    //移动的点已经超过总的长度
+                    if(me.i > me._path.length){
+                        return;
+                    }
+                    //运行下一个点
+                    me._moveNext(++me.i);
+                }else {
+                        currentCount++;
+                        var x = effect(init_pos.x, target_pos.x, currentCount, count),
+                            y = effect(init_pos.y, target_pos.y, currentCount, count),
+                            pos = me._projection.pointToLngLat(new BMap.Pixel(x, y));
+                        //设置marker
+                        if(currentCount == 1){
+                            var proPos = null;
+                            if(me.i - 1 >= 0){
+                                proPos = me._path[me.i - 1];
+                            }
+                            if(me._opts.enableRotation == true){
+                                 me.setRotation(proPos,initPos,targetPos);
+                            }
+                            if(me._opts.autoView){
+                                if(!me._map.getBounds().containsPoint(pos)){
+                                    me._map.setCenter(pos);
+                                }  
+                            }
+                        }
+                        //正在移动
+                        me._marker.setPosition(pos);
+                        //设置自定义overlay的位置
+                        me._setInfoWin(pos);  
+                    }
+            },timer);
+        };
+            //8986031641201904317,8986031641201623579,8986031641201905043,8986031641201624016,8986031641201623360,
+            //8986031641201904999,8986031641201625278,8986031641201621190,8986031541252098753,8986031641201623932
+                lushu1 = new BMapLib.LuShu(map,arrPois1,{
+                defaultContent:"**1",//"从天安门到百度大厦"
+                autoView:true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+                icon  : new BMap.Icon('http://43.250.217.177:8888/car3.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
+                speed: 6000,
+                enableRotation:true,//是否设置marker随着道路的走向进行旋转
+                });    
+
+                lushu2 = new BMapLib.LuShu(map,arrPois2,{
+                defaultContent:"**2",//"从天安门到百度大厦"
+                //autoView:true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+                icon  : new BMap.Icon('http://43.250.217.177:8888/car3.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
+                speed: 6000,
+                enableRotation:true,//是否设置marker随着道路的走向进行旋转
+                });  
+
+                lushu3 = new BMapLib.LuShu(map,arrPois3,{
+                defaultContent:"**3",//"从天安门到百度大厦"
+                //autoView:true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+                icon  : new BMap.Icon('http://43.250.217.177:8888/car3.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
+                speed: 6000,
+                enableRotation:true,//是否设置marker随着道路的走向进行旋转
+                });  
+
+                lushu4 = new BMapLib.LuShu(map,arrPois4,{
+                defaultContent:"**4",//"从天安门到百度大厦"
+                //autoView:true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+                icon  : new BMap.Icon('http://43.250.217.177:8888/car3.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
+                speed: 6000,
+                enableRotation:true,//是否设置marker随着道路的走向进行旋转
+                });  
+
+                lushu5 = new BMapLib.LuShu(map,arrPois5,{
+                defaultContent:"**5",//"从天安门到百度大厦"
+                //autoView:true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+                icon  : new BMap.Icon('http://43.250.217.177:8888/car3.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
+                speed: 6000,
+                enableRotation:true,//是否设置marker随着道路的走向进行旋转
+                });    
+
+                lushu6 = new BMapLib.LuShu(map,arrPois6,{
+                defaultContent:"**6",//"从天安门到百度大厦"
+                //autoView:true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+                icon  : new BMap.Icon('http://43.250.217.177:8888/car3.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
+                speed: 6000,
+                enableRotation:true,//是否设置marker随着道路的走向进行旋转
+                }); 
+
+                lushu7 = new BMapLib.LuShu(map,arrPois7,{
+                defaultContent:"**7",//"从天安门到百度大厦"
+                //autoView:true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+                icon  : new BMap.Icon('http://43.250.217.177:8888/car3.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
+                speed: 6000,
+                enableRotation:true,//是否设置marker随着道路的走向进行旋转
+                }); 
+
+                lushu8 = new BMapLib.LuShu(map,arrPois8,{
+                defaultContent:"**8",//"从天安门到百度大厦"
+                //autoView:true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+                icon  : new BMap.Icon('http://43.250.217.177:8888/car3.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
+                speed: 6000,
+                enableRotation:true,//是否设置marker随着道路的走向进行旋转
+                }); 
+
+                lushu9 = new BMapLib.LuShu(map,arrPois9,{
+                defaultContent:"**9",//"从天安门到百度大厦"
+                //autoView:true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+                icon  : new BMap.Icon('http://43.250.217.177:8888/car3.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
+                speed: 6000,
+                enableRotation:true,//是否设置marker随着道路的走向进行旋转
+                });
+
+                lushu10 = new BMapLib.LuShu(map,arrPois10,{
+                defaultContent:"**10",//"从天安门到百度大厦"
+                //autoView:true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+                icon  : new BMap.Icon('http://43.250.217.177:8888/car3.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
+                speed: 6000,
+                enableRotation:true,//是否设置marker随着道路的走向进行旋转
+                });
+            }
+        }
+    });
+    drv.search('天安门', '百度大厦');
+    //绑定事件
+    $("run").onclick = function(){
+        lushu1.start();
+        lushu2.start();
+        lushu3.start();
+        lushu4.start();
+        lushu5.start();
+        lushu6.start();
+        lushu7.start();
+        lushu8.start();
+        lushu9.start();
+        lushu10.start();
+    }
+    // $("stop").onclick = function(){
+    //     lushu1.stop();
+    //     lushu2.stop();
+    //     lushu3.stop();
+    //     lushu4.stop();
+    //     lushu5.stop();
+    // }
+    // $("pause").onclick = function(){
+    //     lushu1.pause();
+    //     lushu2.pause();
+    //     lushu3.pause();
+    //     lushu4.pause();
+    //     lushu5.pause();
+    // }
+    $("hide").onclick = function(){
+        lushu1.hideInfoWindow();
+        lushu2.hideInfoWindow();
+        lushu3.hideInfoWindow();
+        lushu4.hideInfoWindow();
+        lushu5.hideInfoWindow();
+        lushu6.hideInfoWindow();
+        lushu7.hideInfoWindow();
+        lushu8.hideInfoWindow();
+        lushu9.hideInfoWindow();
+        lushu10.hideInfoWindow();
+    }
+    $("show").onclick = function(){
+        lushu1.showInfoWindow();
+        lushu2.showInfoWindow();
+        lushu3.showInfoWindow();
+        lushu4.showInfoWindow();
+        lushu5.showInfoWindow();
+        lushu6.showInfoWindow();
+        lushu7.showInfoWindow();
+        lushu8.showInfoWindow();
+        lushu9.showInfoWindow();
+        lushu10.showInfoWindow();
+    }
+    function $(element){
+        return document.getElementById(element);
+    }
+</script> 
+</body> 
+</html>

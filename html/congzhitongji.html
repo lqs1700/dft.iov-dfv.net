@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+	<!--开启IE的高版本-->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!--国产浏览器的兼容-->
+	<meta name="renderer" content="webkit">
+	<link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link type="text/css" rel="stylesheet" href="../css/style.css" />
+	<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../js/timer.js" ></script>
+	<script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<style type="text/css">
+	td{width:25%;}
+	.Obuttom{background-color: #94dbe0;color:#ac3242;padding:2px 8px;border: none;border-radius: 3px;}
+	.active{background-color: darkgray}
+</style>
+<body>
+	<div id="page-wrapper">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="well well-sm text-center">充　值　统　计</div>
+					<div id="timer"></div>
+						<div id="line" style="width:100%;height:400px;background: gray;"></div>
+						<div class="clear"></div>
+					<div class="collect-one">
+						<div class="table-responsive">
+							<table class="table table-bordered text-center table-striped table-hover table_data_oper">
+								<thead>
+									<tr class="info">
+										<th>汇总</th>
+										<th>总金额</th>
+										<th>总个数</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+									<?php foreach($t as $tot):?>
+										<td style="font-size: 20px;color:red;">*</td>
+										<td><?php echo  $tot['sum(ROUND(c.price / 100, 0))'] ?></td>
+										<td><?php echo  $tot['count(ROUND(c.price / 100, 0))'] ?></td>
+									<?php endforeach;?>
+										<td>
+											<button name='input' type="button" class="btn-oper" data-toggle="modal" data-target="#myModal-one">查看详情</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="modal fade" id="myModal-one" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="background: rgba(250,3,21,.1);">
+							<div class="modal-dialog">
+								<div class="modal-content" style="background: rgba(26,8,10,.6);margin-top: 40%;">
+									<div class="modal-header">
+										<button type="button" class="close fork_x" name="discript" data-dismiss="modal" aria-hidden="true"> × </button>
+										<h4 class="modal-title modal-h4" id="myModalLabel">详情描述</h4>
+									</div>
+									<div class="modal-body">
+										<div class="sum">
+											<div class="table-responsive">
+												<table class="table table-bordered">
+													<thead>
+														<tr>
+															<th>产品</th>
+															<th>数量</th>
+														</tr>
+													</thead>
+													<tbody>
+													<?php foreach($product as $pro): ?>
+														<tr>
+															<td><?php echo  $pro['productname'] ?></td>
+															<td><?php echo $pro['count(*)'] ?></td>
+														</tr>
+													<?php endforeach;?>
+															</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="collect-two">
+						<div class="table-responsive">
+							<table class="table table-bordered text-center table-striped table-hover table_data_oper">
+								<thead>
+									<tr class="info">
+										<th>充值时间</th>
+										<th>充值个数</th>
+										<th>金额</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+									<?php foreach ($p as $pic): ?>
+								<tbody>
+									<tr>
+										<td><?php echo  $pic['substr(a.createtime,1,10)'] ?></td>
+										<td><?php echo  $pic['count(*)'] ?></td>
+										<td><?php echo  $pic['sum(ROUND(c.price / 100, 0))'] ?></td>
+										<td>
+											<button type="button" num="<?php echo  $pic['count(*)'] ?>" valu="<?php echo $pic['substr(a.createtime,1,10)'];?>" name="Obuttom" class="Obuttom" >分类统计</button>
+<!--													<button name="--><?php //echo  $pic['substr(a.createtime,1,10)'] ?><!--" type="button" class="btn-oper" data-toggle="modal" data-target="#myModal-two" >查看详情</button>-->
+											<a href="../php/import.php?type=report&&time=<?php echo  $pic['substr(a.createtime,1,10)'] ?>" class="download">下载</a>
+										</td>
+									</tr>
+								</tbody>
+								<?php endforeach; ?>
+							</table>
+						</div>
+						<table id="Obox">
+							<tr><td>充值产品</td><td>充值数量</td></tr>
+						</table>
+						<div class="modal fade" name='pay' id="myModal-two" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="background: rgba(250,3,21,.1);">
+							<div class="modal-dialog">
+								<div class="modal-content" style="background: rgba(26,8,10,.6);margin-top: 40%;">
+									<div class="modal-header" >
+										<button type="button"  class="close fork_x" data-dismiss="modal" aria-hidden="true"> × </button>
+										<h4 class="modal-title modal-h4" id="myModalLabel">详情描述</h4>
+									</div>
+									<div class="modal-body">
+										<div class="detail_description" id="description">
+										 </div>
+									</div>
+									<div class="modal-footer1">
+										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	$(function () {
+		$('#myModal-two').modal('hide');
+	});
+</script>
+<script type="text/javascript">
+	$(".collect-two button.btn-oper").click(function(){
+		$(this).addClass("hover-a");
+		var createtime = $(this).attr('name');
+		$.ajax({
+			url:'../php/congzhitongji.php',
+			type:'post',
+			data:{
+				"createtime":createtime
+			},
+			success:function(data){
+				$('#description').html(data);
+			},
+		});
+	});
+</script>
+<!-- 分类统计 -->
+<script type="text/javascript">
+	$('.Obuttom').click(function(){
+		var aaa = $(this).attr('valu');
+		var bbb = $(this).attr('num');
+		$.ajax({
+			url:'../php/congzhitongji.php',
+			type:'post',
+			data:{
+				"aaa":aaa
+			},
+			success:function(data){
+				var sss = eval("("+data+")");
+				var proname = new Array();
+				var count = new Array();
+				document.getElementById("Obox").innerHTML = "<tr><td>充值产品</td><td>数量</td></tr>";
+				for(var i=0; i<sss.length;i++){
+					proname[i] = sss[i]['productname'];
+					count[i] = sss[i]['count(*)'];
+					document.getElementById("Obox").innerHTML += "<tr><td>"+proname[i]+"</td><td>"+count[i]+"</td></tr>";
+				}
+				document.getElementById("Obox").innerHTML += "<tr><td>"+"总 数"+"</td><td>"+bbb+"</td></tr>"
+			},
+		});
+		$('#Obox').toggle();
+		$(this).addClass('active').parents('tbody').siblings().find('button').removeClass('active');
+	});
+</script>
+<!-- 折线图 -->
+<script>
+	var tpro = eval('<?php echo json_encode($tpro);?>');
+	var arr = eval('<?php echo json_encode($arr);?>');
+	var chart = document.getElementById("line");
+	var echart = echarts.init(chart);
+	var option = {
+		title : {
+			text: '充值量趋势图',
+			subtext: '东方启辰'
+		},
+		tooltip : {
+			trigger: 'axis'
+		},
+		legend: {
+			data:['总充值量','总充值量']
+		},
+		toolbox: {
+			show : true,
+			feature : {
+				mark : {show: true},
+				dataView : {show: true, readOnly: false},
+				magicType : {show: true, type: ['line', 'bar']},
+				restore : {show: true},
+				saveAsImage : {show: true}
+			}
+		},
+		calculable : true,
+		xAxis : [
+			{
+				type : 'category',
+				boundaryGap : false,
+				data : arr
+			}
+		],
+		yAxis : [
+			{
+				type : 'value',
+				axisLabel : {
+					formatter: '{value}'
+				}
+			}
+		],
+		series : [
+			{
+				name:'总充值量',
+				type:'line',
+				data:tpro,
+				markPoint : {
+					// data : [
+					//     {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+					// ]
+				},
+				markLine : {
+					data : [
+						{type : 'average', name : '平均值'}
+					]
+				}
+			}
+		]
+	};
+	echart.setOption(option);
+</script>

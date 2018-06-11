@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <!--开启IE的高版本-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--国产浏览器的兼容-->
+    <meta name="renderer" content="webkit">
+    <link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../css/style.css" />
+    <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/timer.js" ></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<style type="text/css">
+    td{width:20%;}
+    body {overflow-y: scroll; }
+    .active{background-color: darkgray}
+</style>
+<body>
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 Otable">
+                <div class="well well-sm text-center"> 解 绑 统 计 </div>
+                <div id="timer"></div>
+                <div id="line" style="width:100%;height:400px;background: gray;"></div>
+                <div class="clear">
+                </div>
+                <div class="collect-one">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center table-striped table-hover table_data_oper">
+                            <thead>
+                            <tr class="info">
+                                <th>汇总</th>
+                                <th>总个数</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <?php foreach($t as $tot):?>
+                                <td style="font-size: 20px;color:red;">*</td>
+                                <td><?php echo  $tot['count(*)'] ?></td>
+                                <?php endforeach;?>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="collect-two">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center table-striped table-hover table_data_oper">
+                            <thead>
+                            <tr class="info">
+                                <th>解绑时间</th>
+                                <th>解绑个数</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <?php foreach ($p as $pic): ?>
+                            <tbody>
+                            <tr>
+                                <td><?php echo  $pic['time'] ?></td>
+                                <td><?php echo  $pic['count(*)'] ?></td>
+                                <td>
+                                    <button sb="<?php echo $pic['time'] ?>" type="button" class="btn-oper Obuttom2">分类统计</button>
+                                    <a href="../php/import.php?type=unbunding_yue&&time=<?php echo $pic['time'] ?>" class="download">下载</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <?php endforeach;?>
+                        </table>
+                    </div>
+                </div>
+                <table style="" id="Obox2">
+                    <tr><td>类型</td><td>数量</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 分类详情 -->
+<script type="text/javascript">
+    $('.Obuttom2').click(function(){
+        var Otab = document.getElementById("Obox2").innerHTML;
+        var sb = $(this).attr('sb');
+        $.ajax({
+            url:'../php/jiebangyue.php',
+            type:'post',
+            data:{
+                "sb":sb
+            },
+            success:function(data){
+                var sss = eval("("+data+")");
+                var count = new Array();
+                var product = new Array();
+                document.getElementById("Obox2").innerHTML = "<tr><td>类型</td><td>数量</td></tr>";
+                for(var i=0; i<sss.length;i++){
+                    product[i] = sss[i]['devid'];
+                    count[i] = sss[i]['count(*)'];
+                    document.getElementById("Obox2").innerHTML += "<tr><td>"+product[i]+"</td><td>"+count[i]+"</td></tr>";
+                }
+            },
+        });
+        $('#Obox2').toggle();
+        $(this).addClass('active').parents('tbody').siblings().find('button').removeClass('active');
+    });
+</script>
+<!-- 折线图 -->
+<script>
+    var tpro = eval('<?php echo json_encode($tpro);?>');
+    var arr = eval('<?php echo json_encode($arr);?>');
+    var chart = document.getElementById("line");
+    var echart = echarts.init(chart);
+    var option = {
+        title : {
+            text: '月解绑',
+            subtext: '东方启辰'
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['月总数','月总数']
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+                data : arr
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                axisLabel : {
+                    formatter: '{value}'
+                }
+            }
+        ],
+        series : [
+            {
+                name:'总解绑数',
+                type:'line',
+                data:tpro,
+                markPoint : {
+                },
+                markLine : {
+                    data : [
+                        {type : 'average', name : '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+    echart.setOption(option);
+</script>
+</body>
+</html>

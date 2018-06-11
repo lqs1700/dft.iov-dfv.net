@@ -1,0 +1,87 @@
+		<link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="../css/style.css" />
+        <script type="text/javascript" src="../js/timer.js" ></script>
+        <script src="../laydate/laydate.js"></script>
+        <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+
+        <style type="text/css">
+           #page-wrapper{margin-top: 10px;}
+           .well{font-size: 20px;color:#29B7C1;font-weight: bold;background:#F2DEDF;}
+           th{text-align: center;}
+        </style>
+    <div id="page-wrapper">	
+        <div class="container-fluid">	
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                	<div class="well well-sm text-center">    推   送   列   表</div>
+                	<div id="timer"></div><form method="post" action="../php/tuisongliebiao.php" style="position: absolute;right:18px;top:73px;">车机编码: <input style="margin-right: 20px;" id="devid" type="text" name="devid">起始时间: <input style="margin-right: 20px;" id="Dabegin" type="text" name="start_time">截止时间: <input id="Daend" type="text" name="end_time"><button style="margin-left:100px;padding: 1px;" type="submit" id="search">开始查询</button></form>
+                    <div class="table-responsive">
+						<table class="table table-bordered text-center table-striped table-hover">
+							<thead>
+								<tr class="info">
+									<th> 车 机 编 号</th>
+									<th> 类 型</th>
+									<th> 产 品</th>
+									<th> 弹 框 信 息</th>
+									<th> 弹 框 时 间</th>	
+								</tr>
+							</thead>
+							<tbody>
+<?php foreach ($t as $pic): ?>
+    <tr class="cen">
+        <td><?php echo  $pic['devid'] ?></td>
+        <td>
+        	<?php 
+        		if($pic['receipt_status'] == 2){echo "流量实效信息";}
+        		if($pic['receipt_status'] == 1){echo "流量消耗信息";}
+    		?>
+    			
+    		</td>
+        <td>
+        	<?php  
+        		if($pic['productid'] == 0){echo "-";}
+	        	if($pic['productid'] == 8){echo "99元月流量包";}
+	        	if($pic['productid'] == 9){echo "5元1G";}
+	        	if($pic['productid'] == 10){echo "9.9元3G";}
+	        	if($pic['productid'] == 11){echo "0元10G";}
+        	?> 	
+        </td>
+        <td>
+        	<?php 
+        		if($pic['productidString'] == 1){echo "一天后到期";}
+        		if($pic['productidString'] == 2){echo "两天后到期";}
+        		if($pic['productidString'] == 3){echo "三天后到期";}
+        		if($pic['productidString'] == 4){ echo "流量不足20%";}
+    			if($pic['productidString'] == 5){ echo "流量不足10%";}
+         	?>	
+         </td>
+        <td><?php echo  $pic['receipttime'] ?></td>
+    </tr>
+<?php endforeach; ?>
+       <tr>
+                                 <td colspan="9" bgcolor="#E0EEE0"><div align="center"><?php echo $key?></div>
+                                 </td> 
+                                 </tr>							
+								
+							</tbody>
+					</table>
+					</div>  	
+                </div>
+            </div>
+           
+        </div>
+      
+    </div>
+
+
+<script type="text/javascript">
+//执行一个laydate实例
+laydate.render({
+    elem: '#Dabegin' //指定元素
+});
+</script>
+<script>
+laydate.render({
+  elem: '#Daend' //指定元素
+});
+</script>

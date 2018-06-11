@@ -1,0 +1,128 @@
+html,body,div,ul,li,dl,dt,dd,h4{
+	margin: 0;
+	padding: 0;
+}
+li{
+	list-style: none;
+}
+html{
+	width: 100%;
+	font-family: "微软雅黑";
+	
+}
+#detail{
+	background: #D3D4D3;
+}
+.head{
+	width: 20rem;
+	
+}
+.head h4{
+	text-align: center;
+	line-height: 2.16rem;
+	background: palevioletred;
+	color: #FFFFFF;
+}
+.msg{
+	width: 20rem;
+	margin-top: 0.5rem;
+	background:#FFFFFF ;
+	height: 10rem;
+}
+.shenf{
+	text-align: center;
+	border-bottom: 1px solid #D3D4D3;
+	line-height:2rem;
+}
+.basic{
+	display: flex;		
+	align-items: center;
+	height: 8rem;
+	font-size:0.85rem;
+}
+.basic>div:nth-of-type(1){
+	width: 5rem;
+	height: 5rem;
+	text-align: center;
+	line-height: 5rem;
+	border-radius: 50%;
+	background: red;
+	color: #FFFFFF;
+	margin-left:0.53rem;
+}
+.basic>div:nth-of-type(2){
+	padding-left:0.53rem;
+}
+.basic>div:nth-of-type(2) li{
+	line-height: 1.8rem;
+}
+.basic>div:nth-of-type(2) li span:nth-of-type(1){
+	display: inline-block;
+	width:3.5rem;
+	text-align: center;
+}
+.yanse{
+	height: 0.6rem;
+	background: #D3D4D3;
+	width: 20rem;
+}
+.content{
+	/*background: #FFFFFF;*/
+	position:absolute;
+	width: 20rem;
+	left: 0;
+	top:14.26rem;
+	bottom: 2.16rem;
+	 overflow: auto;
+	
+	
+}
+.content>div{
+	display: none;
+	font-size:0.85rem;
+	line-height: 1.85rem;
+	padding:0 0.75rem ;
+	
+}
+.content>div  dd{
+	border-bottom: 1px solid #BBB5B5;
+}
+.content  dd span:nth-of-type(1){
+	display: inline-block;
+	text-align: center;
+	
+}
+.content .carma dd span:nth-of-type(1){
+	width:3.5rem;	
+}
+.content .car dd span:nth-of-type(1){
+	width:5.2rem;	
+}
+.content .IOT dd span:nth-of-type(1){
+	width:6.8rem;	
+}
+.content .safe dd span:nth-of-type(1){
+	width:5.2rem;	
+}
+.content .carma{
+	display: block;
+}
+.foot{
+	width: 20rem;
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	justify-content: space-between;
+}
+.foot>div{
+	width: 25%;
+	height: 2.13rem;
+	line-height: 2.13rem;
+	text-align: center;
+	font-size: 0.74rem;
+	border: 1px solid #D3D4D3;
+}
+.active{
+	background: palevioletred;
+	color: #FFFFFF;
+}

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link type="text/css" rel="stylesheet" href="../css/style.css" />
+	<script type="text/javascript" src="../js/timer.js" ></script>
+	<script src="../laydate/laydate.js"></script>
+</head>
+<body>
+	<div id="page-wrapper">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="well well-sm text-center">充　值　列　表</div>
+					<div id="timer"></div>
+					<form method="post" action="../php/congzhiliebiao.php" style="position: absolute;right:18px;top:73px;">充值时间: <input id="cztime" type="text" name="time"><button style="margin-left:100px;padding: 1px;" type="submit" id="search">开始查询</button></form>
+					<div class="table-responsive">
+						<table class="table table-bordered text-center table-striped table-hover">
+							<thead>
+								<tr class="info">
+									<th>用户接入号</th>
+									<th>支付时间</th>
+									<th>车机编号</th>
+									<th>用户姓名</th>
+									<th>用户手机</th>
+									<th>代理商手机</th>
+									<th>充值前账号</th>
+									<th>支付金额</th>
+									<th>充值产品</th>
+									<th>处理状态</th>
+								</tr>
+							</thead>
+							<tbody>
+							<?php foreach ($t as $pic): ?>
+								<tr class="cen">
+									<td><?php echo  $pic['dialnumber'] ?></td>
+									<td><?php echo  $pic['createtime'] ?></td>
+									<td><?php echo  $pic['devid'] ?></td>
+									<td><?php echo  $pic['username'] ?></td>
+									<td><?php echo  $pic['userphone'] ?></td>
+									<td><?php echo  $pic['dealerphone'] ?></td>
+									<td><?php echo  $pic["userstatus"] ?></td>
+									<td><?php echo  $pic['price'] ?></td>
+									<td><?php echo  $pic['productname'] ?></td>
+									<td><?php echo  $pic['orderstatus'] ?></td>
+								</tr>
+							<?php endforeach; ?>
+								 <tr>
+									<td colspan="10" bgcolor="#E0EEE0"><div align="center"><?php echo $key?></div></td>
+								 </tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+	laydate.render({
+		elem: '#cztime'
+	});
+</script>
