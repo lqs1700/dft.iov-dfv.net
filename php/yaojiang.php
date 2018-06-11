@@ -8,7 +8,7 @@
 $type = 2;
 include_once "../func.php";
 include'db.php';
-$sql = "select data_count,data_time from werxin_activity_calculate";
+$sql = "select data_count,data_time from werxin_activity_calculate WHERE data_count<>'0'";
 $res=DB($sql);
 
 $array = array_reverse(array_column($res,'data_time'));
