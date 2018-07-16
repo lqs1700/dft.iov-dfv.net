@@ -4,6 +4,7 @@ include 'db.php';
 $operation = $_GET['type'];
 $time = isset($_GET['time'])?$_GET['time']:date('Y-m-d',time());
 $yue = isset($_GET['time'])?$_GET['time']:date('Y-m',time());
+$partner_id = isset($_GET['partner_id'])?$_GET['partner_id']:false;
 header('Content-type:text/html;charset=utf-8');
 if($operation =='report'){
     $sq="SELECT a.userid,b.dialnumber,a.createtime,b.devid,d.username,e.cid,d.userphone,d.dealerphone,b.iccid,
@@ -221,5 +222,13 @@ if($operation == 'message'){
     $stmt =mysqli_query($con,$sq);
     $head = ['姓名', '手机号', '车机号', '发送时间', '发送内容'];
     $filename = 'shouji'.date('Ymd',time()).'.csv';
+    xiazai($stmt, $head, $filename);
+}
+
+if($operation == 'jihuo_tongji'){
+    $sql="SELECT ccc.dealername, COUNT(*) FROM ( SELECT a.devid AS devid, c.dealername FROM dfqc.dev_user a LEFT JOIN dfqc.dev_store b ON a.devid = b.devicenumber RIGHT JOIN dfqc.bss_dealer c ON c.dealerphone = a.dealerphone WHERE a.username NOT IN ('张三', '联创测试') AND b.storestatus='1' AND c.partner_id = '$partner_id' )ccc GROUP BY ccc.dealername ORDER  by count(*) desc";
+    $stmt =mysqli_query($con,$sql);
+    $head = ['代理人','激活数量'];
+    $filename ='jihoutongji'.$time.'.csv';
     xiazai($stmt, $head, $filename);
 }

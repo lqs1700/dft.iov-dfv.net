@@ -1,0 +1,48 @@
+<link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" href="../css/style.css" />
+<script type="text/javascript" src="../js/timer.js" ></script>
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="well well-sm text-center">激　活　列　表</div>
+                <div id="timer"></div>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center table-striped table-hover">
+                        <thead>
+                        <tr class="info">
+                            <th>车机编号</th>
+                            <th>车牌号</th>
+                            <th>用户名</th>
+                            <th>代理商号码</th>
+                            <th>激活时间</th>
+                            <th>ICCID</th>
+                            <th>运营商卡号</th>
+                            <th>所属省份</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($c as $g): ?>
+                        <tr class="cen">
+                            <td><?php echo  $g['devid'] ?></td>
+                            <td><?php echo  $g['autonumber'] ?></td>
+                            <td><?php echo  $g['username'] ?></td>
+                            <td><?php echo  $g['dealerphone'] ?></td>
+                            <td><?php echo  $g['regdate'] ?></td>
+                            <td><?php echo  $g['iccid'] ?></td>
+                            <td><?php echo  $g['dialnumber'] ?></td>
+                            <td><?php echo  $g['NAME'] ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                        <tr>
+                            <td colspan="9" bgcolor="#E0EEE0"><div align="center"><?php echo $key?></div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,12 +14,9 @@ if($_POST)
 
 	$sql = "select latitude, longitude from bss_app_geographic_codes where iccid ='$iccid' and substr(creat_time,1,10)>='$Dabegin' and substr(creat_time,1,10)<='$Daend' order by creat_time"; 
 	$res = DB($sql);
-	if($res)
-	{
-		foreach($res as $val)
-		{		
-			if($val['latitude']!="")
-			{	
+	if($res){
+		foreach($res as $val){
+			if($val['latitude']!=""){
 				$arr_latitude[]= $val['latitude'];
 				$arr_longitude[]= $val['longitude'];
 			}	

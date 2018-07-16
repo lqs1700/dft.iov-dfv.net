@@ -1,22 +1,3 @@
-<?php foreach($group as $valu){
-    $tk[]=$valu['NAME'];
-    $tv[]=$valu['COUNT(*)'];
-  }
-
-foreach($g as $val){
-    $tot = $val['COUNT(ccc.devid)'];
-}
-
-//今日
-foreach($r as $valu){
-    $tkr[]=$valu['NAME'];
-    $tvr[]=$valu['COUNT(*)'];
-  }
-
-foreach($value as $val){
-    $totv = $val['COUNT(ccc.NAME)'];
-}
-?>
 <link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link type="text/css" rel="stylesheet" href="../css/style.css" />
 <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
@@ -58,6 +39,7 @@ foreach($value as $val){
 								 	<td><?php echo  $f['COUNT(*)'] ?></td>
 								 	<td>
 										<button partner_id="<?php echo $f['partner_id'] ?>" type="button" class="btn-oper Obuttom2">详 情</button>
+										<a href="../php/import.php?type=jihuo_tongji&&partner_id=<?php echo $f['partner_id'] ?>" class="download">下载</a>
 									</td>
 								 </tr>
 								<?php endforeach; ?>

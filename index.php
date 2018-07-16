@@ -43,7 +43,7 @@ if(!(isset($_SESSION['isLogined']) && $_SESSION['isLogined'] == '1')){header('Lo
     <div class="div1">
         <div class="div2">
             <img src="img/xiao1.png">
-            激活展示
+            激活总计
         </div>
         <ul class="div3">
             <li><a class="a" href="php/jihuoliebiao.php" target="rightFrame"
@@ -59,9 +59,42 @@ if(!(isset($_SESSION['isLogined']) && $_SESSION['isLogined'] == '1')){header('Lo
                    onClick="openurl('videoQuery.html');">激活下载</a>
             </li>
         </ul>
+
+        <div class="div2">
+            <img src="img/xiao1.png">
+            车机激活
+        </div>
+        <ul class="div3">
+            <li><a class="a" href="php/chejijihuo.php" target="rightFrame"
+                   onClick="openurl('videoQuery.html');">激活列表</a>
+            </li>
+            <li><a class="a" href="php/chejijihuotongji.php" target="rightFrame"
+                   onClick="openurl('videoQuery.html');">激活统计</a>
+            </li>
+            <li><a class="a" href="php/chejijihuoyue.php" target="rightFrame"
+                   onClick="openurl('videoQuery.html');">激活月计</a>
+            </li>
+        </ul>
+
+        <div class="div2">
+            <img src="img/xiao1.png">
+            云镜激活
+        </div>
+        <ul class="div3">
+            <li><a class="a" href="php/yunjingjihuo.php" target="rightFrame"
+                   onClick="openurl('videoQuery.html');">激活列表</a>
+            </li>
+            <li><a class="a" href="php/yunjingjihuotongji.php" target="rightFrame"
+                   onClick="openurl('videoQuery.html');">激活统计</a>
+            </li>
+            <li><a class="a" href="php/yunjingjihuoyue.php" target="rightFrame"
+                   onClick="openurl('videoQuery.html');">激活月计</a>
+            </li>
+        </ul>
+
         <div class="div2">
             <img src="img/xiao2.png">
-            充值展示
+            充值总计
         </div>
         <ul class="div3">
             <li><a class="a" href="php/congzhiliebiao.php" target="rightFrame"
@@ -75,6 +108,38 @@ if(!(isset($_SESSION['isLogined']) && $_SESSION['isLogined'] == '1')){header('Lo
             </li>
             <li><a class="a" href="php/import.php?type=reportall" target="rightFrame"
                    onClick="openurl('videoQuery.html');">充值下载</a>
+            </li>
+        </ul>
+
+        <div class="div2">
+            <img src="img/xiao2.png">
+            车机充值
+        </div>
+        <ul class="div3">
+            <li><a class="a" href="php/chejichongzhi.php" target="rightFrame"
+                   onClick="openurl('videoQuery.html');">充值列表</a>
+            </li>
+            <li><a class="a" href="php/chejichongzhitongji.php" target="rightFrame"
+                   onClick="openurl('videoQuery.html');">充值统计</a>
+            </li>
+            <li><a class="a" href="php/chejichongzhiyue.php" target="rightFrame"
+                   onClick="openurl('videoQuery.html');">充值月计</a>
+            </li>
+        </ul>
+
+        <div class="div2">
+            <img src="img/xiao2.png">
+            云镜充值
+        </div>
+        <ul class="div3">
+            <li><a class="a" href="php/yunjingchongzhi.php" target="rightFrame"
+                   onClick="openurl('videoQuery.html');">充值列表</a>
+            </li>
+            <li><a class="a" href="php/yunjingchongzhitongji.php" target="rightFrame"
+                   onClick="openurl('videoQuery.html');">充值统计</a>
+            </li>
+            <li><a class="a" href="php/yunjingchongzhiyue.php" target="rightFrame"
+                   onClick="openurl('videoQuery.html');">充值月计</a>
             </li>
         </ul>
         <div class="div2">

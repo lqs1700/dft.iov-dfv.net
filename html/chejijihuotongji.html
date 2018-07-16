@@ -1,0 +1,104 @@
+<link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" href="../css/style.css" />
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/timer.js" ></script>
+<script type="text/javascript" src="../js/echarts.min.js"></script>
+<style type="text/css">
+    td{width:20%;}
+    body {overflow-y: scroll; }
+    #Obox2{position:fixed;}
+    .active{background-color: #ce8a93;color: white;}
+</style>
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="well well-sm text-center">激　活　统　计</div>
+                <div id="timer"></div>
+                <div class="collect-one">
+                    <div class="table-responsive box-info">
+                        <table class="table table-bordered table-striped text-center">
+                            <thead>
+                            <tr class="info">
+                                <th>省份</th>
+                                <th>汇总</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($g as $p): ?>
+                            <tr class="cen" style="background-color:#d7dde4">
+                                <td>汇总</td>
+                                <td><?php echo  $p['COUNT(ccc.devid)']  ?></td>
+                                <td></td>
+                            </tr>
+                            <?php endforeach; ?>
+                            <?php foreach ($group as $f): ?>
+                            <tr class="cen">
+                                <td><?php echo  $f['NAME']?$f['NAME']:'<span style="color:red">无省份信息</span>' ?></td>
+                                <td><?php echo  $f['COUNT(*)'] ?></td>
+                                <td>
+                                    <button partner_id="<?php echo $f['partner_id'] ?>" type="button" class="btn-oper Obuttom2">详 情</button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-responsive box-info">
+                        <table class="table table-bordered table-striped text-center">
+                            <thead>
+                            <tr class="info">
+                                <th>省份</th>
+                                <th>今日激活</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="cen" style="background-color:#d7dde4">
+                                <td>汇总</td>
+                                <?php foreach ($value as $total): ?>
+                                <td><?php echo  $total['COUNT(ccc.NAME)'] ?></td>
+                                <?php endforeach; ?>
+                            </tr>
+                            <?php foreach ($r as $l): ?>
+                            <tr class="cen">
+                                <td><?php echo  $l['NAME']?$l['NAME']:'<span style="color:red">无省份信息</span>' ?></td>
+                                <td><?php echo  $l['COUNT(*)'] ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table style="left: 10%;width: 400px;max-height: 500px;overflow-y:auto;display: block;" id="Obox2">
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    $('.Obuttom2').click(function(){
+        var Otab = document.getElementById("Obox2").innerHTML;
+        var partner_id = $(this).attr('partner_id');
+        $.ajax({
+            url:'../php/chejijihuotongji.php',
+            type:'post',
+            data:{
+                "partner_id":partner_id,
+            },
+            success:function(data){
+                var sss = eval("("+data+")");
+                var count = new Array();
+                var productidString = new Array();
+                document.getElementById("Obox2").innerHTML = "<tr><td>代理人</td><td>激活数量</td></tr>";
+                for(var i=0; i<sss.length;i++){
+                    count[i] = sss[i]['dealername'];
+                    productidString[i] = sss[i]['COUNT(*)'];
+                    document.getElementById("Obox2").innerHTML += "<tr><td>"+count[i]+"</td><td>"+productidString[i]+"</td></tr>";
+                }
+            },
+        });
+        $('#Obox2').toggle();
+        $(this).addClass('active').parents('.cen').siblings().find('button').removeClass('active');
+    });
+</script>

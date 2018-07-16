@@ -9,12 +9,12 @@ switch ($type)
     break;
 
     case 1:
-        $con = mysqli_connect('180.101.255.3:3306','test','123456','dfqc');       //测试库
+        $con = mysqli_connect('180.101.255.3:33066','test','123456','dfqc');       //测试库
         //$con = mysqli_connect('df-db-master','wx','wx234','dfqc');//正式库
     break;
 
     case 3:
-        $con = mysqli_connect('180.101.255.3:3306','test','123456','dfqc');         //测试库
+        $con = mysqli_connect('180.101.255.3:33066','test','123456','dfqc');         //测试库
         //$con = mysqli_connect('180.101.254.177:33066','lqs','lqs@123456','dfqc'); //经纬度上海节点正式库
     break;
 }

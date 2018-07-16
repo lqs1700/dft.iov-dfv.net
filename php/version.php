@@ -7,7 +7,7 @@
  */
 $type = 3;
 require_once "db.php";
-$sql = "select * from bss_app_version order by date_time";
+$sql = "select * from bss_app_version order by date_time DESC";
 $res = DB($sql);
 require_once "../html/version.html";
 

@@ -6,11 +6,7 @@
 	$cer_password = $_POST['password'];
 
 	$isset = DB('SELECT * FROM admin_user WHERE username = "'.$username.'" && password = "'.$password.'"');
-	$sql = "SELECT a.cernumber,a.userphone,b.iccid
-			FROM(dev_user a,dev_store b)
-			WHERE a.devid=b.devicenumber
-			AND userphone ='$username'
-			AND SUBSTR(cernumber,-7,6) = '$cer_password'";
+	$sql = "SELECT a.cernumber,a.userphone,b.iccid FROM(dev_user a,dev_store b) WHERE a.devid=b.devicenumber AND userphone ='$username' AND SUBSTR(cernumber,-7,6) = '$cer_password'";
 	$isset2=DB($sql);
 
 	if($isset|$isset2){
